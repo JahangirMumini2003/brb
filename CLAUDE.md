@@ -52,7 +52,7 @@ Modules in template order: onboarding → phone/OTP auth (incl. lockout/limit er
 
 ## Telegram Mini App integration
 
-The app is deployed to Vercel and opened inside Telegram as a Mini App. `BRB Bot files (4)/TELEGRAM_WEBAPP.md` (written in Uzbek) is the integration playbook — BotFather setup, Vercel config (root directory must point at the app folder; serve `index.html` with `no-cache`), and a test checklist. Its invariants apply to all frontend changes:
+The app is deployed to Vercel (production: <https://brb-xi.vercel.app/>) and opened inside Telegram as a Mini App. `BRB Bot files (4)/TELEGRAM_WEBAPP.md` (written in Uzbek) is the integration playbook — BotFather setup, Vercel config (root directory must point at the app folder; serve `index.html` with `no-cache`), and a test checklist. Its invariants apply to all frontend changes:
 
 - The Telegram SDK (`telegram-web-app.js`) and its init script live in the **static** `<head>` of `index.html` — never move them into `<helmet>` (see load-order note above; inside Telegram the `window.Telegram` guard would silently always fail).
 - Always guard Telegram calls with `if (window.Telegram && window.Telegram.WebApp)` — the app must keep working in a plain browser.
