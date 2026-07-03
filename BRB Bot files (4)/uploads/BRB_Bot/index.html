@@ -3,22 +3,30 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="https://telegram.org/js/telegram-web-app.js"></script>
+<script>
+  if (window.Telegram && window.Telegram.WebApp) {
+    var tg = window.Telegram.WebApp;
+    tg.ready();
+    tg.expand();
+    tg.setHeaderColor('#ffffff');
+    tg.setBackgroundColor('#ffffff');
+    if (typeof tg.disableVerticalSwipes === 'function') {
+      tg.disableVerticalSwipes();
+    }
+    var setTgVh = function () {
+      document.documentElement.style.setProperty('--tg-vh', tg.viewportStableHeight + 'px');
+    };
+    setTgVh();
+    tg.onEvent('viewportChanged', setTgVh);
+  }
+</script>
 <script src="./support.js"></script>
 </head>
 <body>
 <x-dc>
 
 <helmet>
-  <script src="https://telegram.org/js/telegram-web-app.js"></script>
-  <script>
-    if (window.Telegram && window.Telegram.WebApp) {
-      const tg = window.Telegram.WebApp;
-      tg.ready();
-      tg.expand();
-      tg.setHeaderColor('#ffffff');
-      tg.setBackgroundColor('#ffffff');
-    }
-  </script>
   <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
   <style>
     body { margin:0; background:#ECECEC; }
@@ -36,12 +44,12 @@
     .phone-frame { width:390px;height:844px;background:#fff;border-radius:48px;overflow:hidden;display:flex;flex-direction:column;box-shadow:0 24px 80px rgba(0,0,0,0.12),0 0 0 1px rgba(0,0,0,0.06);position:relative;flex-shrink:0 }
     .phone-statusbar { height:58px;display:flex;align-items:flex-end;justify-content:space-between;padding:0 32px 8px;flex-shrink:0 }
     @media (max-width:500px) {
-      html { height: 100dvh; overflow: hidden; }
-      body { height: 100dvh; overflow: hidden; background:#fff !important; }
-      .phone-outer { padding:0; width:100%; height:100dvh; overflow:hidden; display:block; }
+      html { height: var(--tg-vh, 100dvh); overflow: hidden; }
+      body { height: var(--tg-vh, 100dvh); overflow: hidden; background:#fff !important; }
+      .phone-outer { padding:0; width:100%; height:var(--tg-vh, 100dvh); overflow:hidden; display:block; }
       .phone-frame {
         width:100% !important;
-        height:100dvh !important;
+        height:var(--tg-vh, 100dvh) !important;
         border-radius:0 !important;
         box-shadow:none !important;
         overflow:hidden !important;
